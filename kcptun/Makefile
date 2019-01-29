@@ -29,7 +29,7 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 define Package/kcptun/Default
-  TITLE:=A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
+  TITLE:=Simple UDP Tunnel Based On KCP.
   USERID:=kcptun=12900:kcptun=12900
   URL:=https://github.com/xtaci/kcptun
   SECTION:=net
@@ -45,17 +45,19 @@ endef
 
 define Package/kcptun-client
 $(call Package/kcptun/Default)
+  TITLE+= Client only.
   DEPENDS+=+golang-github-pkg-errors-dev
   GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/client/
 endef
 
 define Package/kcptun-server
 $(call Package/kcptun/Default)
+  TITLE+= Server only.
   GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/server/
 endef
 
 define Package/kcptun/Default/description
-Simple UDP Tunnel Based On KCP.
+A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
 endef
 
 define Package/kcptun-client/description
