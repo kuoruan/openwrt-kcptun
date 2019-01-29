@@ -11,7 +11,7 @@ PKG_NAME:=golang-github-klauspost-cpuid
 PKG_VERSION:=1.2.0
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/klauspost/cpuid/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=aa29ebcf12669eef96c7c54b551617b90b65c55d126ef0ff9fbacd605e738a67
 PKG_BUILD_DIR:=$(BUILD_DIR)/cpuid-$(PKG_VERSION)

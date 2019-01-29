@@ -11,7 +11,7 @@ PKG_NAME:=golang-github-klauspost-reedsolomon
 PKG_VERSION:=1.8.0
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/klauspost/reedsolomon/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=fe0274e3a60614831484a0f87643d824ce1617a7fcb75ad5797c3c1fc2b6902b
 PKG_BUILD_DIR:=$(BUILD_DIR)/reedsolomon-$(PKG_VERSION)
