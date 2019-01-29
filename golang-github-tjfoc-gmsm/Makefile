@@ -42,5 +42,5 @@ define Package/golang-github-tjfoc-gmsm-dev/description
 GM SM2/3/4 library based on Golang.
 endef
 
-$(eval $(call GoSrcPackage,golang-github-tjfoc-xor-gmsm))
-$(eval $(call BuildPackage,golang-github-tjfoc-xor-gmsm))
+$(eval $(call GoSrcPackage,golang-github-tjfoc-gmsm-dev))
+$(eval $(call BuildPackage,golang-github-tjfoc-gmsm-dev))
