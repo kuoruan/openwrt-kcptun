@@ -8,11 +8,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=golang-github-templexxx-xor
-PKG_VERSION:=0.2.1
+PKG_VERSION:=0.1.2
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/templexxx/xor/tar.gz/v$(PKG_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/templexxx/xor/tar.gz/$(PKG_VERSION)?
 PKG_HASH:=651fd92863fbd5db45f08bb494cf139b9b6cb5901fe228a635f124f256d8d3bf
 PKG_BUILD_DIR:=$(BUILD_DIR)/xor-$(PKG_VERSION)
 
