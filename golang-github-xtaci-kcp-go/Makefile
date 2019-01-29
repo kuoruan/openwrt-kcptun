@@ -12,8 +12,9 @@ PKG_VERSION:=5.0.7
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcp-go/tar.gz/v$(PKG_SOURCE_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcp-go/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=29e3c9c399e41e1755b8af300c18e9dd18d0707d99341eef178f3c3934f8d0dd
+PKG_BUILD_DIR:=$(BUILD_DIR)/kcp-go-$(PKG_VERSION)
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE

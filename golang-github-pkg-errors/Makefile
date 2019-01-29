@@ -12,8 +12,9 @@ PKG_VERSION:=0.8.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/pkg/errors/tar.gz/v$(PKG_SOURCE_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/pkg/errors/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=7a428967c6fc2e80cd84a0d9469ab6bd4dbe6b13493ba6294322a933a5a7e356
+PKG_BUILD_DIR:=$(BUILD_DIR)/errors-$(PKG_VERSION)
 
 PKG_LICENSE:=BSD
 PKG_LICENSE_FILES:=LICENSE

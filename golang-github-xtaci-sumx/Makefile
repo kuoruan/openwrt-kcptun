@@ -12,8 +12,9 @@ PKG_VERSION:=1.1.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/xtaci/smux/tar.gz/v$(PKG_SOURCE_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/xtaci/smux/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=45392e63cbeebd7580e3d4e07b1bbcaa59c2d3b76bec5394b6be5f0d01503695
+PKG_BUILD_DIR:=$(BUILD_DIR)/smux-$(PKG_VERSION)
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
