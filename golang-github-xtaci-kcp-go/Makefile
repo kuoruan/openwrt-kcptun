@@ -34,7 +34,9 @@ $(call GoPackage/GoSubMenu)
   TITLE:=A Production-Grade Reliable-UDP Library for golang.
   URL:=https://github.com/xtaci/kcp-go
   DEPENDS:=$(GO_ARCH_DEPENDS) \
-    +golang-github-klauspost-reedsolomon-dev
+    +golang-github-klauspost-reedsolomon-dev \
+    +golang-github-templexxx-xor-dev \
+    +golang-github-tjfoc-gmsm-dev
   PKGARCH:=all
 endef
 
