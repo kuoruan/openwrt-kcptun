@@ -33,7 +33,12 @@ define Package/kcptun/Default
   USERID:=kcptun=12900:kcptun=12900
   URL:=https://github.com/xtaci/kcptun
   DEPENDS:=$(GO_ARCH_DEPENDS) \
-    +golang-golang-x-crypto-dev
+    +golang-golang-x-crypto-dev \
+    +golang-github-golang-snappy-dev \
+    +golang-github-pkg-errors-dev \
+    +golang-github-urfave-cli-dev \
+    +golang-github-xtaci-kcp-go-dev \
+    +golang-github-xtaci-smux-dev
 endef
 
 define Package/kcptun
