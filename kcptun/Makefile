@@ -32,35 +32,56 @@ define Package/kcptun/Default
   TITLE:=A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
   USERID:=kcptun=12900:kcptun=12900
   URL:=https://github.com/xtaci/kcptun
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=Web Servers/Proxies
   DEPENDS:=$(GO_ARCH_DEPENDS) \
     +golang-golang-x-crypto-dev \
     +golang-github-golang-snappy-dev \
-    +golang-github-pkg-errors-dev \
     +golang-github-urfave-cli-dev \
     +golang-github-xtaci-kcp-go-dev \
     +golang-github-xtaci-smux-dev
 endef
 
-define Package/kcptun
+define Package/kcptun-client
 $(call Package/kcptun/Default)
-  SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=Web Servers/Proxies
+  DEPENDS+=+golang-github-pkg-errors-dev
+  GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/client/
+endef
+
+define Package/kcptun-server
+$(call Package/kcptun/Default)
+  GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/server/
 endef
 
 define Package/kcptun/Default/description
 Simple UDP Tunnel Based On KCP.
 endef
 
-define Package/kcptun/description
+define Package/kcptun-client/description
 $(call Package/kcptun/Default/description)
 
-This package containes the kcptun client and server.
+This package is the kcptun client.
 endef
 
-define Package/kcptun/install
-$(call GoPackage/Package/Install/Bin,$(1))
+define Package/kcptun-server/description
+$(call Package/kcptun/Default/description)
+
+This package is the kcptun server.
 endef
 
-$(eval $(call GoBinPackage,kcptun))
-$(eval $(call BuildPackage,kcptun))
+define Package/kcptun-client/install
+  $(INSTALL_DIR) $(1)/usr/bin
+  $(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/client $(1)/usr/bin/kcptun-client
+endef
+
+define Package/kcptun-server/install
+  $(INSTALL_DIR) $(1)/usr/bin
+  $(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/server $(1)/usr/bin/kcptun-server
+endef
+
+$(eval $(call GoBinPackage,kcptun-client))
+$(eval $(call BuildPackage,kcptun-client))
+
+$(eval $(call GoBinPackage,kcptun-server))
+$(eval $(call BuildPackage,kcptun-server))
