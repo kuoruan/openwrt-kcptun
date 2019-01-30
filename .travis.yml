@@ -3,6 +3,9 @@ notifications:
   email: false
 language: c
 compiler: gcc
+cache:
+  directories:
+  - ${HOME}/dl
 git:
   depth: 1
   submodules: false
@@ -36,6 +39,9 @@ install:
 - file "${SDK_FILE}" && tar -Jxf "${SDK_FILE}"
 - cd ${SDK_DIR}/openwrt-sdk-*
 - ln -s ${TRAVIS_BUILD_DIR}/ "package/${PACKAGE}"
+- [ -d "${HOME}/dl" ] || mkdir -p "${HOME}/dl"
+- [ -d "dl" ] && rm -rf dl
+- ln -s ${HOME}/dl/ dl
 script:
 - export PATH=${HOME}/local/usr/bin:$PATH
 - cd ${SDK_DIR}/openwrt-sdk-*
