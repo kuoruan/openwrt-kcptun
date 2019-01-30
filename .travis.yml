@@ -35,7 +35,7 @@ install:
   - export SDK_FILE="${DOWNLOAD_DIR}/$(basename ${SDK_URL})"
   - file "${SDK_FILE}" && tar -Jxf "${SDK_FILE}"
   - cd ${SDK_DIR}/openwrt-sdk-*
-  - mkdir package && ln -s $TRAVIS_BUILD_DIR/ package/${PACKAGE}
+  - ln -s ${TRAVIS_BUILD_DIR}/ "package/${PACKAGE}"
 script:
   - export PATH=${HOME}/local/usr/bin:$PATH
   - cd ${HOME}/sdk/openwrt-sdk-*
