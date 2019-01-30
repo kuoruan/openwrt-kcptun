@@ -27,6 +27,7 @@ env:
 install:
   - mkdir -p ${HOME}/local && cd ${HOME}/local
   - wget "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
+  - sudo apt-get install -y dpkg
   - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" .
   - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
   - wget -c "$SDK_URL"
