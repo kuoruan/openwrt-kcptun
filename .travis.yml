@@ -38,13 +38,14 @@ install:
   - ln -s ${TRAVIS_BUILD_DIR}/ "package/${PACKAGE}"
 script:
   - export PATH=${HOME}/local/usr/bin:$PATH
-  - cd ${HOME}/sdk/openwrt-sdk-*
-  - ./scripts/feeds update -a >/dev/null
-  - ./scripts/feeds install -a >/dev/null
+  - cd ${SDK_DIR}/openwrt-sdk-*
+  - ./scripts/feeds update -a
+  - ./scripts/feeds install -a
   - make defconfig
   - make package/${PACKAGE}/compile V=s
   - find ${SDK_DIR}/openwrt-sdk-*/bin/
-  - find . -name ${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
+  - find ${SDK_DIR}/openwrt-sdk-*/bin/ -name *${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
+  - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
 deploy:
   provider: releases
   file_glob: true
