@@ -4,6 +4,7 @@ notifications:
 language: c
 compiler: gcc
 cache:
+  bundler: true
   directories:
   - ${HOME}/dl
 git:
@@ -33,7 +34,7 @@ install:
 - sudo apt-get install -y dpkg
 - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" .
 - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
-- wget -c "$SDK_URL"
+- wget "$SDK_URL"
 - mkdir -p "$SDK_DIR" && cd "$SDK_DIR"
 - export SDK_FILE="${DOWNLOAD_DIR}/$(basename ${SDK_URL})"
 - file "${SDK_FILE}" && tar -Jxf "${SDK_FILE}"
