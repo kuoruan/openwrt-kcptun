@@ -8,51 +8,52 @@ git:
   submodules: false
 env:
   global:
-    - PACKAGE=kcptun
-    - USER=kuoruan
-    - REPO=openwrt-kcptun
-    - CCACHE_VERSION=3.6
-    - DOWNLOAD_DIR=${HOME}/cache
-    - SDK_DIR=${HOME}/sdk
+  - PACKAGE=kcptun
+  - USER=kuoruan
+  - REPO=openwrt-kcptun
+  - CCACHE_VERSION=3.6
+  - DOWNLOAD_DIR=${HOME}/cache
+  - SDK_DIR=${HOME}/sdk
   matrix:
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/openwrt-sdk-ar71xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620/openwrt-sdk-ramips-mt7620_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-sdk-ramips-mt7621_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8/openwrt-sdk-ramips-mt76x8_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic/openwrt-sdk-brcm63xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic/openwrt-sdk-bcm53xx_gcc-7.4.0_musl_eabi.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic/openwrt-sdk-brcm47xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic/openwrt-sdk-ipq806x_gcc-7.4.0_musl_eabi.Linux-x86_64.tar.xz
-    - SDK_URL=https://downloads.openwrt.org/snapshots/targets/x86/generic/openwrt-sdk-x86-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/openwrt-sdk-ar71xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620/openwrt-sdk-ramips-mt7620_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-sdk-ramips-mt7621_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8/openwrt-sdk-ramips-mt76x8_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic/openwrt-sdk-brcm63xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic/openwrt-sdk-bcm53xx_gcc-7.4.0_musl_eabi.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic/openwrt-sdk-brcm47xx-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic/openwrt-sdk-ipq806x_gcc-7.4.0_musl_eabi.Linux-x86_64.tar.xz
+  - SDK_URL=https://downloads.openwrt.org/snapshots/targets/x86/generic/openwrt-sdk-x86-generic_gcc-7.4.0_musl.Linux-x86_64.tar.xz
 install:
-  - mkdir -p ${HOME}/local && cd ${HOME}/local
-  - wget "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
-  - sudo apt-get install -y dpkg
-  - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" .
-  - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
-  - wget -c "$SDK_URL"
-  - mkdir -p "$SDK_DIR" && cd "$SDK_DIR"
-  - export SDK_FILE="${DOWNLOAD_DIR}/$(basename ${SDK_URL})"
-  - file "${SDK_FILE}" && tar -Jxf "${SDK_FILE}"
-  - cd ${SDK_DIR}/openwrt-sdk-*
-  - ln -s ${TRAVIS_BUILD_DIR}/ "package/${PACKAGE}"
+- mkdir -p ${HOME}/local && cd ${HOME}/local
+- wget "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
+- sudo apt-get install -y dpkg
+- dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" .
+- mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
+- wget -c "$SDK_URL"
+- mkdir -p "$SDK_DIR" && cd "$SDK_DIR"
+- export SDK_FILE="${DOWNLOAD_DIR}/$(basename ${SDK_URL})"
+- file "${SDK_FILE}" && tar -Jxf "${SDK_FILE}"
+- cd ${SDK_DIR}/openwrt-sdk-*
+- ln -s ${TRAVIS_BUILD_DIR}/ "package/${PACKAGE}"
 script:
-  - export PATH=${HOME}/local/usr/bin:$PATH
-  - cd ${SDK_DIR}/openwrt-sdk-*
-  - ./scripts/feeds update -a
-  - ./scripts/feeds install -a
-  - make defconfig
-  - make package/${PACKAGE}/compile V=s
-  - find ${SDK_DIR}/openwrt-sdk-*/bin/
-  - find ${SDK_DIR}/openwrt-sdk-*/bin/ -name *${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
-  - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
+- export PATH=${HOME}/local/usr/bin:$PATH
+- cd ${SDK_DIR}/openwrt-sdk-*
+- "./scripts/feeds update -a"
+- "./scripts/feeds install -a"
+- make defconfig
+- make package/${PACKAGE}/compile V=s
+- find ${SDK_DIR}/openwrt-sdk-*/bin/
+- find ${SDK_DIR}/openwrt-sdk-*/bin/ -name *${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR
+  \;
+- ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
 deploy:
   provider: releases
   file_glob: true
-  file: ${TRAVIS_BUILD_DIR}/*.ipk
+  file: "${TRAVIS_BUILD_DIR}/*.ipk"
   skip_cleanup: true
   api_key:
-    secure: "V1pV11IkOWeY3FaUY8QSFG2+Q6Z3QmKf+iU4TDInSI2RQqb9e0y6dvQJG8hs9zaa0wxBcyJpKQ6Ub5OzZXKJ4aIycI8S7BIn6NVmWiuT+3gwsXd+85urbdPwui07tWmms7YpgR4+V/k3iwvCIsCknBzdLxsMwfle5sP06sij33nTGydM0A8xCLFmDFx4HVY7jrxg/7mu/s5c16ErrZupnWHA9R/VHFkxr0Y6Tt4ZoTZF/fSSdOYfp8utUy1O7DwaID6paF2eJadEXqjTNoUtwALyVnUqM6WY7igTuJDDTNcLDS3gNhopZGglCYKXHW/i0IllFlhZ2iZebQBoyLJTkdKmWiFwL5pRizk2UKd02JSfmneKqn3JWw5eGVQRrlYvEUJrDMpmTEKqxs5tawPKOA3Vzo736GZ983OeesWyNqso2TO88lB4fwaQ0Mlt7qCpNaPJnBUnE4qc7GxV0ZbcwslwW9uTvGelxsG5zXWWxDeHuJXFpS4XJvQeZ5Ri86CwXxAJhLYJs6KELgRRWMCcQXoH3gT1v1HGyRT4EHOXKwQ1JrP4mPd1AqpbLsCXKsIt/p1xe7w+mDMmkJ22hE7KBCczRlrBQtBUVGtm0ddPQMkzhn18OiGeVLYrE35IV3LWFl5mNe50+K3U4eXLJOuehwfSX5WWvHPFxrdD3BXAh5w="
+    secure: t3i57lo628E4Mob/1m4Mrk6AjvULEmEsAFtZ0x5r4drPuA41fyG+BTY/1leyv5rkJZrDSbpNEcitJ1xgOTaxaAq+lpHqoKm6PrTvgTOA5DuIBD859EIm0Z62KDLjSK0T+Nj4qG3mw34NYHFwE10lh925NVUi7i4VFv5dVy7woRme0TS//nz2nqPpxJFy5BsunnTv5XvKwPYWtjrQ8+Ag1xGvOElyZzrjVMpWsM6a1HSWPFxG3REgGe/B6FAT4H2VOv7U6bz5lES0iCMQokhCXYxwYgCR7WWrSCtN8TV0ATH1MYGO/8pZQLUzAfSdFsGOPZuBO+dUrd2QU4Yas+V6kUwN7GsKiL2m40oWBUtEXnMfyZA7ib5dWRsQYH5YY27+qdtTx4oyoO5TqqQmDXq+Ye7DGqm12ljUDosCe52c/R1GhZ2JulsniezT6c+fM7GxJDwOdXQ+DqDc2N3uwDDaLi7f8xpJB4JVIHRUen4LuMsG3Dxu2D6ukaULfXkUvdeEu2e2TsHfIT+K8GCm/nSIKsl5hJ0gLY+bg8LD8bzNlN3gmXVcBViDDXbXTd8v1Akbh07ECpNOV3FCG78kGNralEyYgLmkJ2qyOP+YyeRPdtQmfQfddQTgGvBTsXE3tg7LGDgl39kTqAmWJeg8I94g/v36pdzazhDDxlSWl40UKdg=
   on:
     tags: true
     all_branches: true
