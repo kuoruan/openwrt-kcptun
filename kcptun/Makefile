@@ -29,61 +29,38 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 define Package/kcptun/Default
-  TITLE:=Simple UDP Tunnel Based On KCP.
-  USERID:=kcptun=12900:kcptun=12900
-  URL:=https://github.com/xtaci/kcptun
-  SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=Web Servers/Proxies
-  DEPENDS:=$(GO_ARCH_DEPENDS) \
-    +golang-golang-x-crypto-dev \
-    +golang-github-golang-snappy-dev \
-    +golang-github-urfave-cli-dev \
-    +golang-github-xtaci-kcp-go-dev \
-    +golang-github-xtaci-smux-dev
+  define Package/kcptun-$(1)
+    TITLE:=Simple UDP Tunnel Based On KCP ($(1))
+    USERID:=kcptun=12900:kcptun=12900
+    URL:=https://github.com/xtaci/kcptun
+    SECTION:=net
+    CATEGORY:=Network
+    SUBMENU:=Web Servers/Proxies
+    DEPENDS:=$$(GO_ARCH_DEPENDS) \
+      +golang-golang-x-crypto-dev \
+      +golang-github-golang-snappy-dev \
+      +golang-github-pkg-errors-dev \
+      +golang-github-urfave-cli-dev \
+      +golang-github-xtaci-kcp-go-dev \
+      +golang-github-xtaci-smux-dev
+  endef
+
+  define Package/kcptun-$(1)/description
+  A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
+
+  This package contains the kcptun $(1).
+  endef
+
+  define Package/kcptun-$(1)/install
+	$$(INSTALL_DIR) $$(1)/usr/bin
+	$$(INSTALL_BIN) $$(GO_PKG_BUILD_BIN_DIR)/$(1) $$(1)/usr/bin/kcptun-$(1)
+  endef
 endef
 
-define Package/kcptun-client
-$(call Package/kcptun/Default)
-  TITLE+= Client only.
-  DEPENDS+=+golang-github-pkg-errors-dev
-  GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/client/
-endef
+KCPTUN_COMPONENTS:=client server
 
-define Package/kcptun-server
-$(call Package/kcptun/Default)
-  TITLE+= Server only.
-  GO_PKG_BUILD_PKG:=github.com/xtaci/kcptun/server/
-endef
-
-define Package/kcptun/Default/description
-A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
-endef
-
-define Package/kcptun-client/description
-$(call Package/kcptun/Default/description)
-
-This package is the kcptun client.
-endef
-
-define Package/kcptun-server/description
-$(call Package/kcptun/Default/description)
-
-This package is the kcptun server.
-endef
-
-define Package/kcptun-client/install
-  $(INSTALL_DIR) $(1)/usr/bin
-  $(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/client $(1)/usr/bin/kcptun-client
-endef
-
-define Package/kcptun-server/install
-  $(INSTALL_DIR) $(1)/usr/bin
-  $(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/server $(1)/usr/bin/kcptun-server
-endef
-
-$(eval $(call GoBinPackage,kcptun-client))
-$(eval $(call BuildPackage,kcptun-client))
-
-$(eval $(call GoBinPackage,kcptun-server))
-$(eval $(call BuildPackage,kcptun-server))
+$(foreach component,$(KCPTUN_COMPONENTS), \
+  $(eval $(call Package/kcptun/Default,$(component))) \
+  $(eval $(call GoBinPackage,kcptun-$(component))) \
+  $(eval $(call BuildPackage,kcptun-$(component))) \
+)
