@@ -39,10 +39,10 @@ install:
 script:
   - export PATH=${HOME}/local/usr/bin:$PATH
   - cd ${HOME}/sdk/openwrt-sdk-*
-  - ./scripts/feeds update packages >/dev/null
-  - ./scripts/feeds install -d m kcptun-client
-  - ./scripts/feeds install -d m kcptun-server
-  - make V=s
+  - ./scripts/feeds update -a >/dev/null
+  - ./scripts/feeds install -a >/dev/null
+  - make defconfig
+  - make package/${PACKAGE}/compile V=s
   - find ${SDK_DIR}/openwrt-sdk-*/bin/
   - find . -name ${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
 deploy:
