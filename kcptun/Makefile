@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kcptun
 PKG_VERSION:=20190109
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v${PKG_VERSION}?
@@ -29,24 +29,27 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 define Package/kcptun/Default
+  TITLE:=Simple UDP Tunnel Based On KCP
+  URL:=https://github.com/xtaci/kcptun
+endef
+
+define Package/kcptun/Default/description
+A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
+endef
+
+define kcptun/templates
   define Package/kcptun-$(1)
-    TITLE:=Simple UDP Tunnel Based On KCP ($(1))
+  $$(call Package/kcptun/Default)
+    TITLE+= ($(1))
     USERID:=kcptun=12900:kcptun=12900
-    URL:=https://github.com/xtaci/kcptun
     SECTION:=net
     CATEGORY:=Network
     SUBMENU:=Web Servers/Proxies
-    DEPENDS:=$$(GO_ARCH_DEPENDS) \
-      +golang-golang-x-crypto-dev \
-      +golang-github-golang-snappy-dev \
-      +golang-github-pkg-errors-dev \
-      +golang-github-urfave-cli-dev \
-      +golang-github-xtaci-kcp-go-dev \
-      +golang-github-xtaci-smux-dev
+    DEPENDS:=$$(GO_ARCH_DEPENDS)
   endef
 
   define Package/kcptun-$(1)/description
-  A Stable & Secure Tunnel Based On KCP with N:M Multiplexing.
+  $(call Package/kcptun/Default/description)
 
   This package contains the kcptun $(1).
   endef
@@ -57,10 +60,33 @@ define Package/kcptun/Default
   endef
 endef
 
+define Package/golang-github-xtaci-kcptun-dev
+$(call Package/kcptun/Default)
+$(call GoPackage/GoSubMenu)
+  TITLE+= (source files)
+  DEPENDS+= \
+    +golang-golang-x-crypto-dev \
+    +golang-github-golang-snappy-dev \
+    +golang-github-pkg-errors-dev \
+    +golang-github-urfave-cli-dev \
+    +golang-github-xtaci-kcp-go-dev \
+    +golang-github-xtaci-smux-dev
+  PKGARCH:=all
+endef
+
+define Package/golang-github-xtaci-kcptun-dev/description
+$(call Package/kcptun/Default/description)
+
+This package provides the source files for the kcptun client/server.
+endef
+
 KCPTUN_COMPONENTS:=client server
 
 $(foreach component,$(KCPTUN_COMPONENTS), \
-  $(eval $(call Package/kcptun/Default,$(component))) \
+  $(eval $(call kcptun/templates,$(component))) \
   $(eval $(call GoBinPackage,kcptun-$(component))) \
   $(eval $(call BuildPackage,kcptun-$(component))) \
 )
+
+$(eval $(call GoSrcPackage,golang-github-xtaci-kcptun-dev))
+$(eval $(call BuildPackage,golang-github-xtaci-kcptun-dev))
