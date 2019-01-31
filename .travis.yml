@@ -51,7 +51,7 @@ script:
 - make defconfig
 - make package/${PACKAGE}/compile V=s
 - find ${SDK_DIR}/openwrt-sdk-*/bin/
-- find ${SDK_DIR}/openwrt-sdk-*/bin/ -name ${PACKAGE}-*.ipk | grep -v dev -exec cp {} $TRAVIS_BUILD_DIR \;
+- find ${SDK_DIR}/openwrt-sdk-*/bin/ -name ${PACKAGE}-*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
 - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
 deploy:
   provider: releases
