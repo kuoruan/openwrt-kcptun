@@ -12,7 +12,7 @@ PKG_VERSION:=20190109
 PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v${PKG_VERSION}?
+PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=2e6e8ba4d9ca4f2e4d108c5731e4ba71953555dc25bce4cf09cd6d50cc2dc4a2
 
 PKG_LICENSE:=MIT
@@ -79,6 +79,8 @@ $(call Package/kcptun/Default/description)
 
 This package provides the source files for the kcptun client/server.
 endef
+
+TARGET_LDFLAGS+=' '-s' -X main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE)_OpenWrt '-w
 
 KCPTUN_COMPONENTS:=client server
 
