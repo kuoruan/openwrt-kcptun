@@ -68,6 +68,7 @@ install:
 - echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
 - echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
 - echo "src-git luci https://github.com/openwrt/luci.git" >>feeds.conf
+- echo "src-git routing https://git.openwrt.org/feed/routing.git" >>feeds.conf
 - echo "src-git telephony https://github.com/openwrt/telephony.git" >>feeds.conf
 - echo "src-link ${PACKAGE} ${TRAVIS_BUILD_DIR}" >>feeds.conf
 script:
