@@ -35,7 +35,7 @@ install:
 # Install ccache
 - wget -c "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
 - mkdir -p "${HOME}/local"
-- sudo apt-get install -y dpkg
+- sudo apt-get install -yq dpkg
 - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" "${HOME}/local"
 - export PATH="${HOME}/local/usr/bin:$PATH"
 # Download SDKs
@@ -64,13 +64,15 @@ install:
 - \[ -d "${HOME}/dl" \] || mkdir -p "${HOME}/dl"
 - \[ -d "dl" \] && rm -rf dl
 - ln -s "${HOME}/dl/" dl
-# Add new feeds.
+# Add feeds.
 - echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
 - echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
 - echo "src-git luci https://github.com/openwrt/luci.git" >>feeds.conf
 - echo "src-git routing https://git.openwrt.org/feed/routing.git" >>feeds.conf
 - echo "src-git telephony https://github.com/openwrt/telephony.git" >>feeds.conf
-- echo "src-link ${PACKAGE} ${TRAVIS_BUILD_DIR}" >>feeds.conf
+# - echo "src-link ${PACKAGE} ${TRAVIS_BUILD_DIR}" >>feeds.conf
+# Add soft link to package
+- ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
 script:
 - cd "$SDK_HOME"
 - "./scripts/feeds update -a >/dev/null"
