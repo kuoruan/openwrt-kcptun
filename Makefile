@@ -76,7 +76,9 @@ $(call Package/kcptun/Default/description)
 This package provides the source files for the kcptun client/server.
 endef
 
-TARGET_LDFLAGS+=' '-s' -X main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE)_OpenWrt '-w
+define Build/Compile
+$(call GoPackage/Build/Compile,-ldflags "-X 'main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt' -s -w")
+endef
 
 KCPTUN_COMPONENTS:=client server
 
