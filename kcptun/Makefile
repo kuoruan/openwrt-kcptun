@@ -9,11 +9,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kcptun
 PKG_VERSION:=20190109
+PKG_SOURCE_DATE:=2019-02-03
+PKG_SOURCE_VERSION:=456232eafdd9cd50ea908eeefa96004ceaa8d2bd
 PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=2e6e8ba4d9ca4f2e4d108c5731e4ba71953555dc25bce4cf09cd6d50cc2dc4a2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
+PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/$(PKG_SOURCE_VERSION)?
+PKG_HASH:=e311a756ed7145cae405d17c220e364c7f8714b799dc38ab9bb14a1c8c62915d
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
@@ -64,13 +67,6 @@ define Package/golang-github-xtaci-kcptun-dev
 $(call Package/kcptun/Default)
 $(call GoPackage/GoSubMenu)
   TITLE+= (source files)
-  DEPENDS+= \
-    +golang-golang-x-crypto-dev \
-    +golang-github-golang-snappy-dev \
-    +golang-github-pkg-errors-dev \
-    +golang-github-urfave-cli-dev \
-    +golang-github-xtaci-kcp-go-dev \
-    +golang-github-xtaci-smux-dev
   PKGARCH:=all
 endef
 
