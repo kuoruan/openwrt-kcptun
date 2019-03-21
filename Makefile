@@ -28,6 +28,9 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/xtaci/kcptun
 
+GO_PKG_LDFLAGS:=-s -w
+GO_PKG_LDFLAGS_X:='main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt'
+
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
@@ -52,7 +55,7 @@ define kcptun/templates
   endef
 
   define Package/kcptun-$(1)/description
-  $(call Package/kcptun/Default/description)
+  $$(call Package/kcptun/Default/description)
 
   This package contains the kcptun $(1).
   endef
@@ -74,10 +77,6 @@ define Package/golang-github-xtaci-kcptun-dev/description
 $(call Package/kcptun/Default/description)
 
 This package provides the source files for the kcptun client/server.
-endef
-
-define Build/Compile
-$(call GoPackage/Build/Compile,-ldflags "-X 'main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt' -s -w")
 endef
 
 KCPTUN_COMPONENTS:=client server
