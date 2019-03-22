@@ -8,15 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kcptun
-PKG_VERSION:=20190109
-PKG_SOURCE_DATE:=2019-02-03
-PKG_SOURCE_VERSION:=456232eafdd9cd50ea908eeefa96004ceaa8d2bd
-PKG_RELEASE:=2
+PKG_VERSION:=20190321
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/$(PKG_SOURCE_VERSION)?
-PKG_HASH:=e311a756ed7145cae405d17c220e364c7f8714b799dc38ab9bb14a1c8c62915d
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://codeload.github.com/xtaci/kcptun/tar.gz/v$(PKG_VERSION)?
+PKG_HASH:=53637dc8431a8aa4998913c052c578c52c7082ee400c3daeae68965d585df074
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
@@ -28,8 +25,7 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/xtaci/kcptun
 
-GO_PKG_LDFLAGS:=-s -w
-GO_PKG_LDFLAGS_X:='main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt'
+GO_PKG_LDFLAGS:=-s -w -X 'main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt'
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
