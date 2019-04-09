@@ -58,6 +58,10 @@ install:
     fi
   fi
 - file "${DOWNLOAD_DIR}/${SDK_FILE}"
+- |
+  if [ -z "$TRAVIS_TAG" ] && [ "x$SDK" != "x-sdk-x86-generic_" ] ; then
+    travis_terminate 0
+  fi
 - export SDK_HOME="$(mktemp -d)"
 - cd "$SDK_HOME"
 - tar -Jxf "${DOWNLOAD_DIR}/${SDK_FILE}" --strip=1
