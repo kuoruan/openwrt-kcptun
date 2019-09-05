@@ -25,8 +25,9 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/xtaci/kcptun
 
-GO_PKG_LDFLAGS:=-s -w
-GO_PKG_LDFLAGS_X:='main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt'
+GO_PKG_LDFLAGS:=-s -w -X 'main.VERSION=$(PKG_VERSION)-$(PKG_RELEASE) for OpenWrt'
+
+# Can't use GO_PKG_LDFLAGS_X to define X args with space
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
