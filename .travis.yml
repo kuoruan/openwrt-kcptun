@@ -6,6 +6,7 @@ language: c
 compiler: gcc
 cache:
   bundler: true
+  ccache: true
   directories:
     - ${HOME}/dl
     - ${HOME}/files
@@ -16,8 +17,8 @@ git:
 env:
   global:
     - PACKAGE=kcptun
-    - USER=kuoruan
-    - REPO=openwrt-kcptun
+    - GITHUB_USER=kuoruan
+    - GITHUB_REPO=openwrt-kcptun
     - DOWNLOAD_DIR=${HOME}/files
   matrix:
     - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
