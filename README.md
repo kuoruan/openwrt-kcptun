@@ -49,7 +49,6 @@ git clone https://github.com/kuoruan/openwrt-kcptun.git package/kcptun
 
 make menuconfig
 
-Languages  ---> Go  ---> <M> golang-github-xtaci-kcptun-dev # 源码包，通常并不需要
 Network  ---> Web Servers/Proxies  ---> <*> kcptun-client
 Network  ---> Web Servers/Proxies  ---> <*> kcptun-server
 
