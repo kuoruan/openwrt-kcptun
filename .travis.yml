@@ -93,8 +93,9 @@ install:
   - ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
 before_script:
   - cd "$SDK_HOME"
-  - ./scripts/feeds update -a >/dev/null
-  - ./scripts/feeds install -a >/dev/null
+  - ./scripts/feeds update -a
+  - test -d ./feeds/packages/net/kcptun && rm -rf ./feeds/package/net/kcptun || true
+  - ./scripts/feeds install -a
   - make defconfig
 script:
   - cd "$SDK_HOME"
