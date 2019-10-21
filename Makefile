@@ -50,8 +50,10 @@ define Package/kcptun/Default
   endef
 
   define Package/kcptun-$(1)/install
+	$$(call GoPackage/Package/Install/Bin,$$(PKG_INSTALL_DIR))
+
 	$$(INSTALL_DIR) $$(1)/usr/bin
-	$$(INSTALL_BIN) $$(GO_PKG_BUILD_BIN_DIR)/$(1) $$(1)/usr/bin/kcptun-$(1)
+	$$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/usr/bin/$(1) $$(1)/usr/bin/kcptun-$(1)
   endef
 endef
 
