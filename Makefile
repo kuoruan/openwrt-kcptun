@@ -34,7 +34,6 @@ include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 define Package/kcptun/Default
   define Package/kcptun-$(1)
-    USERID:=kcptun=12900:kcptun=12900
     SECTION:=net
     CATEGORY:=Network
     SUBMENU:=Web Servers/Proxies
