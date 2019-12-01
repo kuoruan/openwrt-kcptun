@@ -110,8 +110,7 @@ deploy:
   file_glob: true
   file: "${TRAVIS_BUILD_DIR}/*.ipk"
   skip_cleanup: true
-  api_key:
-    secure: t3i57lo628E4Mob/1m4Mrk6AjvULEmEsAFtZ0x5r4drPuA41fyG+BTY/1leyv5rkJZrDSbpNEcitJ1xgOTaxaAq+lpHqoKm6PrTvgTOA5DuIBD859EIm0Z62KDLjSK0T+Nj4qG3mw34NYHFwE10lh925NVUi7i4VFv5dVy7woRme0TS//nz2nqPpxJFy5BsunnTv5XvKwPYWtjrQ8+Ag1xGvOElyZzrjVMpWsM6a1HSWPFxG3REgGe/B6FAT4H2VOv7U6bz5lES0iCMQokhCXYxwYgCR7WWrSCtN8TV0ATH1MYGO/8pZQLUzAfSdFsGOPZuBO+dUrd2QU4Yas+V6kUwN7GsKiL2m40oWBUtEXnMfyZA7ib5dWRsQYH5YY27+qdtTx4oyoO5TqqQmDXq+Ye7DGqm12ljUDosCe52c/R1GhZ2JulsniezT6c+fM7GxJDwOdXQ+DqDc2N3uwDDaLi7f8xpJB4JVIHRUen4LuMsG3Dxu2D6ukaULfXkUvdeEu2e2TsHfIT+K8GCm/nSIKsl5hJ0gLY+bg8LD8bzNlN3gmXVcBViDDXbXTd8v1Akbh07ECpNOV3FCG78kGNralEyYgLmkJ2qyOP+YyeRPdtQmfQfddQTgGvBTsXE3tg7LGDgl39kTqAmWJeg8I94g/v36pdzazhDDxlSWl40UKdg=
+  github_token: $GITHUB_TOKEN
   on:
     tags: true
     all_branches: true
