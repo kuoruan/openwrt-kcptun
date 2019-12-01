@@ -110,7 +110,7 @@ deploy:
   file_glob: true
   file: "${TRAVIS_BUILD_DIR}/*.ipk"
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  token: $GITHUB_TOKEN
   on:
     tags: true
     all_branches: true
