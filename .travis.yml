@@ -1,5 +1,5 @@
 dist: bionic
-sudo: false
+os: linux
 notifications:
   email: false
 language: c
@@ -28,9 +28,8 @@ addons:
 env:
   global:
     - PACKAGE=kcptun
-    - GITHUB_USER=kuoruan
-    - GITHUB_REPO=openwrt-kcptun
     - DOWNLOAD_DIR=${HOME}/files
+    - CONFIG_CCACHE=y
 matrix:
   include:
     - env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
@@ -94,7 +93,12 @@ install:
 before_script:
   - cd "$SDK_HOME"
   - ./scripts/feeds update -a
-  - test -d ./feeds/packages/net/kcptun && rm -rf ./feeds/package/net/kcptun || true
+  - |
+    test -d ./feeds/packages/net/kcptun && \
+      rm -rf ./feeds/package/net/kcptun || true
+  - |
+    curl https://codeload.github.com/openwrt/packages/tar.gz/${OPENWRT_GOLANG_COMMIT:-master} | \
+      tar -xz -C ./feeds/packages/lang --strip=2 packages-${OPENWRT_GOLANG_COMMIT:-master}/lang/golang
   - ./scripts/feeds install -a
   - make defconfig
 script:
@@ -109,7 +113,8 @@ deploy:
   provider: releases
   file_glob: true
   file: "${TRAVIS_BUILD_DIR}/*.ipk"
-  skip_cleanup: true
+  cleanup: false
+  edge: true
   token: $GITHUB_TOKEN
   on:
     tags: true
